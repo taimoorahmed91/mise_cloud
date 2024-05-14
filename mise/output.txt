@@ -1,0 +1,39 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0  0     0    0     0    0     0      0      0 --:--:--  0:00:03 --:--:--     0100  1325  100  1325    0     0    359      0  0:00:03  0:00:03 --:--:--   359100  1325  100  1325    0     0    359      0  0:00:03  0:00:03 --:--:--   359
+
+ise32.taimoorlab.localise32.taimoorlab.local
+Updated 'queue' column in table: ap
+Updated 'queue' column in table: authentication
+Updated 'queue' column in table: authorization
+Updated 'queue' column in table: authz
+Updated 'queue' column in table: dacl
+Skipping table 'deployhistory' as 'queue' column does not exist.
+Skipping table 'deploymentcode' as 'queue' column does not exist.
+Skipping table 'deployments' as 'queue' column does not exist.
+Skipping table 'deployschedule' as 'queue' column does not exist.
+Updated 'queue' column in table: nad
+Skipping table 'patch' as 'queue' column does not exist.
+Updated 'queue' column in table: policyset
+Skipping table 'policysetdeploy' as 'queue' column does not exist.
+Skipping table 'radius' as 'queue' column does not exist.
+Skipping table 'report' as 'queue' column does not exist.
+Skipping table 'scheduler' as 'queue' column does not exist.
+Updated 'queue' column in table: sgt
+Updated 'queue' column in table: uploads
+Skipping table 'users' as 'queue' column does not exist.
+Skipping table 'webex' as 'queue' column does not exist.
+BOT_ACCESS_TOKEN: NmM3ZjliOTMtNjkyYi00ZWI1LTliNjItOGNhNWQ3YmJkYzQ2NWM2YWY5MzItMDA3_PF84_1eb65fdf-9643-417f-9974-ad72cae0e10f
+Room Name: Taimoor Ahmed
+Room ID: Y2lzY29zcGFyazovL3VzL1JPT00vNjQ2YjMxODAtMDNiMy0xMWVlLWFkNjEtNTE5ZmFjMDExMDI4
+
+
+Fetched values:
+- Value: 2023-07-04 15:40:00
+  The fetched time is in the past. Updating the database...
+  Database updated successfully.
+  The "now" column is set to "yes". Running deploy.php...
+  deploy.php executed successfully. Updating the database...
+  Database updated successfully.
+- Value: 2023-07-10 15:40:00
+  The fetched time is not in the past.
