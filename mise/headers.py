@@ -3,7 +3,7 @@ import base64
 
 # Replace these values with your actual database credentials
 db_config = {
-    'host': '127.0.0.1',
+    'host': 'database',
     'database': 'mise',
     'user': 'root',
     'password': 'C1sc0123@'

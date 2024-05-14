@@ -12,7 +12,7 @@ def check_sftp_connection(host, port, username, password):
 
 # Set the connection details
 db_connection = mysql.connector.connect(
-    host="localhost",
+    host="database",
     user="root",
     password="C1sc0123@",
     database="mise"

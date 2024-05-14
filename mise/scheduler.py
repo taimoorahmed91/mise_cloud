@@ -7,7 +7,7 @@ from datetime import datetime
 while True:
     # Establish a connection to the MySQL database
     db_connection = mysql.connector.connect(
-        host="localhost",
+        host="database",
         user="root",
         password="C1sc0123@",
         database="mise"

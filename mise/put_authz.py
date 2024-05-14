@@ -60,7 +60,7 @@ initial_url = url1 + dstise + url2
 
 # Database connection details (modify as necessary)
 db_config = {
-    'host': 'localhost',
+    'host': 'database',
     'user': 'root',
     'password': 'C1sc0123@',
     'database': 'mise'

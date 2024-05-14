@@ -83,7 +83,7 @@ if len(error_parts) >= 1:
 
 
 
-connection = mysql.connector.connect(host='127.0.0.1',
+connection = mysql.connector.connect(host='database',
                                      database='mise',
                                      user='root',
                                      password='C1sc0123@')

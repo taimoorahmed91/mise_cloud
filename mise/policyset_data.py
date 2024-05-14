@@ -11,7 +11,7 @@ fqdn = sys.argv[1]
 inheritid = sys.argv[2]
 
 connection = mysql.connector.connect(
-    host='127.0.0.1',
+    host='database',
     database='mise',
     user='root',
     password='C1sc0123@'

@@ -45,7 +45,7 @@ for resource in resources:
 
 # Establish a database connection
 connection = mysql.connector.connect(
-    host='127.0.0.1',
+    host='database',
     database='mise',
     user='root',
     password='C1sc0123@'

@@ -11,7 +11,7 @@ MESSAGE_TEXT = ''
 
 
 connection = mysql.connector.connect(
-    host='localhost',
+    host='database',
     user='root',
     password='C1sc0123@',
     database='mise'

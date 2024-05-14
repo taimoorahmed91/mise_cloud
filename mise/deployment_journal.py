@@ -4,7 +4,7 @@ from datetime import datetime
 
 # Establish a connection to the MySQL database
 connection = mysql.connector.connect(
-    host='127.0.0.1',
+    host='database',
     user='root',
     password='C1sc0123@',
     database='mise'
