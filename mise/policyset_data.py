@@ -1,3 +1,4 @@
+import os
 import urllib3
 import requests
 import sys
@@ -5,6 +6,7 @@ import json
 import mysql.connector
 import contextlib
 import datetime
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 fqdn = sys.argv[1]
@@ -26,11 +28,7 @@ initial_filename = "/root/ise-landscape/mise/configs/policyset/"
 initial_webfilename = "/var/www/html/mise/v0.1/configs/policyset/"
 
 payload = {}
-#headers = {
-#    'Content-Type': 'application/json',
-#    'Accept': 'application/json',
-#    'Authorization': 'Basic YWRtaW46QzFzYzAxMjNA',
-#}
+
 with open('credentials.txt') as file:
     # Execute the code in a separate namespace
     namespace = {}
@@ -39,10 +37,8 @@ with open('credentials.txt') as file:
     # Extract the 'headers' variable
     headers = namespace.get('headers', {})
 
-
 response = requests.get(url, headers=headers, data=payload, verify=False)
 result = response.text
-
 
 ### set time parameters
 current_time = datetime.datetime.now()
@@ -50,15 +46,17 @@ current_time = datetime.datetime.now()
 # Format the time as a string
 time_string = current_time.strftime("%Y-%m-%d %H:%M:%S")
 
-
-
-
 file_path = "/var/www/html/mise/v0.1/logging/policyset-logs"
+
+# Ensure the directories exist
+os.makedirs(os.path.dirname(file_path), exist_ok=True)
+os.makedirs(os.path.dirname(initial_filename), exist_ok=True)
+os.makedirs(os.path.dirname(initial_webfilename), exist_ok=True)
+
 with open(file_path, "a") as file:
     # Append the output to the file
     file.write(time_string + "\n")
     file.write(result)
-
 
 json_response = response.json()
 policy_sets = json_response['response']
@@ -76,7 +74,6 @@ for policy_set in policy_sets:
     text_result = response2.text
     json_response2 = response2.json()
     initial_result = json_response2['response']
-    #del initial_result['rank']
     del initial_result['id']
     final_result = json.dumps(initial_result, indent=4)
     filename = initial_filename + my_id
@@ -89,7 +86,6 @@ for policy_set in policy_sets:
             print(final_result)
     
     response_post = str(response2)[1:-1]
-    #print(inheritid)
     insert_values.append((my_name, my_id, fqdn, response_post, href, inheritid))
 
 # Execute the batch insert

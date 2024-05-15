@@ -1,3 +1,4 @@
+import os
 import urllib3
 import requests
 import sys
@@ -26,21 +27,12 @@ secondhalfurl = "/api/v1/policy/network-access/policy-set/"
 url = firsthalfurl + isename + secondhalfurl + policysetid + authentication
 
 payload = {}
-#headers = {
-#    'Content-Type': 'application/json',
-#    'Accept': 'application/json',
-#    'Authorization': 'Basic YWRtaW46QzFzYzAxMjNA',
-#}
 
 with open('credentials.txt') as file:
-    # Execute the code in a separate namespace
     namespace = {}
     exec(file.read(), namespace)
-    
-    # Extract the 'headers' variable
     headers = namespace.get('headers', {})
 
-    
 response = requests.get(url, headers=headers, data=payload, verify=False)
 result = response.text
 
@@ -52,15 +44,19 @@ length = len(resources)
 initial_filename = "/root/ise-landscape/mise/configs/authentications/"
 initial_webfilename = "/var/www/html/mise/v0.1/configs/authentications/"
 
+# Ensure the directories exist
+os.makedirs(os.path.dirname(initial_filename), exist_ok=True)
+os.makedirs(os.path.dirname(initial_webfilename), exist_ok=True)
+
 # Prepare the batch insert statement
-insert_query = "INSERT INTO authentication (authentication, authenticationid, policyset, isename, get_code,href) VALUES (%s, %s, %s, %s, %s, %s)"
+insert_query = "INSERT INTO authentication (authentication, authenticationid, policyset, isename, get_code, href) VALUES (%s, %s, %s, %s, %s, %s)"
 insert_values = []
 
 for resource in resources:
     my_id = resource['rule']['id']
     my_name = resource['rule']['name']
     srcauthurl = url + "/" + my_id
-    href = resource['link']['href'] 
+    href = resource['link']['href']
     response2 = requests.get(srcauthurl, headers=headers, data=payload, verify=False)
     text_result = response2.text
     json_response2 = response2.json()
@@ -77,7 +73,7 @@ for resource in resources:
         with contextlib.redirect_stdout(o):
             print(final_result)
     response_post = str(response2)[1:-1]
-    insert_values.append((my_name, my_id, policysetname, isename, response_post,href))
+    insert_values.append((my_name, my_id, policysetname, isename, response_post, href))
 
 # Execute the batch insert
 cursor.executemany(insert_query, insert_values)

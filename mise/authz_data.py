@@ -1,3 +1,4 @@
+import os
 import urllib3
 import requests
 import sys
@@ -29,6 +30,8 @@ url2 = "/ers/config/authorizationprofile"
 url = url1 + fqdn + url2
 
 initial_webfilename = "/var/www/html/mise/v0.1/configs/authz/"
+os.makedirs(os.path.dirname(initial_webfilename), exist_ok=True)
+
 
 payload = {}
 #headers = {
@@ -51,6 +54,7 @@ json_response = response.json()
 resources = json_response['SearchResult']['resources']
 
 file_path = "/var/www/html/mise/v0.1/logging/authz-logs"
+os.makedirs(os.path.dirname(file_path), exist_ok=True)
 with open(file_path, "a") as file:
     # Append the output to the file
     file.write(time_string + "\n")

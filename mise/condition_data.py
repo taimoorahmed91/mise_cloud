@@ -1,3 +1,4 @@
+import os
 import urllib3
 import requests
 import sys
@@ -5,6 +6,7 @@ import json
 import mysql.connector
 import contextlib
 import datetime
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # MySQL credentials
@@ -16,13 +18,11 @@ connection = mysql.connector.connect(
 )
 cursor = connection.cursor(dictionary=True)
 
-
 ### set time parameters
 current_time = datetime.datetime.now()
 
 # Format the time as a string
 time_string = current_time.strftime("%Y-%m-%d %H:%M:%S")
-
 
 fqdn = sys.argv[1]
 
@@ -33,12 +33,7 @@ url = url1 + fqdn + url2
 
 initial_webfilename = "/var/www/html/mise/v0.1/configs/condition/"
 
-payload={}
-#headers = {
-#    'Content-Type': 'application/json',
-#    'Accept': 'application/json',
-#    'Authorization': 'Basic YWRtaW46QzFzYzAxMjNA',
-#}
+payload = {}
 
 with open('credentials.txt') as file:
     # Execute the code in a separate namespace
@@ -55,14 +50,16 @@ json_response = response.json()
 resources = json_response['response']
 print(resources)
 
-
 file_path = "/var/www/html/mise/v0.1/logging/condition-logs"
+
+# Ensure the directories exist
+os.makedirs(os.path.dirname(file_path), exist_ok=True)
+os.makedirs(os.path.dirname(initial_webfilename), exist_ok=True)
+
 with open(file_path, "a") as file:
     # Append the output to the file
     file.write(time_string + "\n")
     file.write(result)
-
-
 
 # Prepare the batch insert statement
 insert_query = "INSERT INTO cond (cond, condid, isename, get_code, href) VALUES (%s, %s, %s, %s, %s)"
@@ -73,7 +70,7 @@ for resource in resources:
         my_id = resource['id']
         my_name = resource['name']
         srcauthurl = url + "/" + my_id
-        href = resource['link']['href']        
+        href = resource['link']['href']
         response2 = requests.get(srcauthurl, headers=headers, data=payload, verify=False)
         text_result = response2.text
         json_response2 = response2.json()
@@ -88,8 +85,7 @@ for resource in resources:
         response_post = str(response2)
         response_post = response_post[:-1]
         response_post = response_post[1:]
-        insert_values.append((my_name, my_id, fqdn, response_post,href))
-        #print(my_name)
+        insert_values.append((my_name, my_id, fqdn, response_post, href))
     except IndexError:
         break
 
@@ -104,10 +100,6 @@ delete_query = """
     WHERE t1.id < t2.id
 """
 
-#print("Generated DELETE query:")
-#print(delete_query)
-
 # Execute delete query
 cursor.execute(delete_query)
 connection.commit()
-
