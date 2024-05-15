@@ -28,7 +28,7 @@ url = firsthalfurl + isename + secondhalfurl + policysetid + authentication
 
 payload = {}
 
-with open('credentials.txt') as file:
+with open('/var/www/html/mise/v0.1/credentials.txt') as file:
     namespace = {}
     exec(file.read(), namespace)
     headers = namespace.get('headers', {})

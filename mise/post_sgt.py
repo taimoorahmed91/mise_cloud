@@ -48,7 +48,7 @@ payload={}
 #  'Authorization': 'Basic YWRtaW46QzFzYzAxMjNA',
 #}
 
-with open('credentials.txt') as file:
+with open('/var/www/html/mise/v0.1/credentials.txt') as file:
     # Execute the code in a separate namespace
     namespace = {}
     exec(file.read(), namespace)

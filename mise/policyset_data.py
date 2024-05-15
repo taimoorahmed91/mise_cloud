@@ -29,7 +29,7 @@ initial_webfilename = "/var/www/html/mise/v0.1/configs/policyset/"
 
 payload = {}
 
-with open('credentials.txt') as file:
+with open('/var/www/html/mise/v0.1/credentials.txt') as file:
     # Execute the code in a separate namespace
     namespace = {}
     exec(file.read(), namespace)
