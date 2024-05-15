@@ -1,0 +1,35 @@
+name: Build and Deploy Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Log in to Docker Hub
+      run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+    - name: Get current date and time
+      id: vars
+      run: echo "::set-output name=datetime::$(date +'%Y%m%d%H%M%S')"
+
+    - name: Build and tag Docker image
+      run: |
+        datetime=${{ steps.vars.outputs.datetime }}
+        docker build -t taimoora91/misepy:latest -t taimoora91/misepy:${datetime} .
+
+    - name: Push Docker image to Docker Hub
+      run: |
+        datetime=${{ steps.vars.outputs.datetime }}
+        docker push taimoora91/misepy:latest
+        docker push taimoora91/misepy:${datetime}
