@@ -18,7 +18,7 @@ RUN chmod +x /root/install_packages.sh && /root/install_packages.sh
 RUN mkdir -p /root/ise-landscape
 
 # Copy the content of the local mise folder to the container
-COPY ./mise /root/ise-landscape
+COPY ./mise /root/ise-landscape/mise
 
 # Keep the container running
 CMD ["tail", "-f", "/dev/null"]
